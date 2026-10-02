@@ -7,277 +7,225 @@
 <title>1% Challenge</title>
 
 <style>
-:root{
-  --bg:#08080f;
-  --card:#15151f;
-  --card2:#1d1d29;
-  --text:#ffffff;
-  --muted:#9292a3;
-  --purple:#8b5cff;
-  --purple2:#b06cff;
-  --red:#ff4564;
-  --green:#35d07f;
-  --gold:#ffd45c;
+* {
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
 }
 
-*{
-  box-sizing:border-box;
-  -webkit-tap-highlight-color:transparent;
-}
-
-body{
-  margin:0;
-  min-height:100vh;
+body {
+  margin: 0;
+  min-height: 100vh;
   background:
-    radial-gradient(circle at 50% 0%,#21164a 0%,#0d0d16 35%,#08080f 70%);
-  color:var(--text);
-  font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display",
-  "Helvetica Neue",Arial,sans-serif;
+    radial-gradient(circle at 50% 0%, #29204d 0%, #11111b 45%, #08080d 100%);
+  color: white;
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display",
+               "Segoe UI", sans-serif;
 }
 
-.app{
-  width:100%;
-  max-width:460px;
-  min-height:100vh;
-  margin:auto;
-  padding:22px 18px 35px;
+.app {
+  width: 100%;
+  max-width: 460px;
+  min-height: 100vh;
+  margin: auto;
+  padding: 24px 18px 35px;
 }
 
-.top{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
+.top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
-.logo{
-  font-size:26px;
-  font-weight:900;
-  letter-spacing:-1px;
+.logo {
+  font-size: 17px;
+  font-weight: 900;
+  letter-spacing: 2px;
 }
 
-.day{
-  color:var(--muted);
-  font-size:12px;
-  letter-spacing:1px;
-  font-weight:700;
+.day {
+  font-size: 12px;
+  color: #aaaabd;
+  letter-spacing: 1px;
 }
 
-.badge{
-  display:inline-flex;
-  margin-top:24px;
-  padding:9px 15px;
-  border-radius:30px;
-  background:#272432;
-  color:#e8e5ef;
-  font-size:12px;
-  font-weight:800;
-  letter-spacing:1.5px;
+.badge {
+  display: inline-block;
+  margin-top: 25px;
+  padding: 10px 15px;
+  border-radius: 999px;
+  background: #292938;
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: 1.5px;
 }
 
-h1{
-  font-size:34px;
-  line-height:1.05;
-  letter-spacing:-1.5px;
-  margin:18px 0 10px;
+.card {
+  margin-top: 20px;
+  padding: 25px 20px 22px;
+  border-radius: 28px;
+  background: rgba(28,28,39,.92);
+  border: 1px solid rgba(255,255,255,.09);
+  box-shadow: 0 20px 70px rgba(0,0,0,.45);
 }
 
-.subtitle{
-  color:var(--muted);
-  font-size:17px;
-  line-height:1.5;
-  margin:0;
+h1 {
+  margin: 0;
+  font-size: 34px;
+  line-height: 1.05;
+  letter-spacing: -1.5px;
 }
 
-.targetLabel{
-  text-align:center;
-  margin-top:30px;
-  color:#8d8d9d;
-  font-size:12px;
-  letter-spacing:3px;
-  font-weight:700;
+.subtitle {
+  margin: 14px 0 25px;
+  color: #a7a7b8;
+  font-size: 17px;
+  line-height: 1.5;
 }
 
-.target{
-  text-align:center;
-  font-size:76px;
-  line-height:1;
-  font-weight:950;
-  letter-spacing:-4px;
-  margin-top:7px;
-  text-shadow:0 0 30px rgba(139,92,255,.25);
+.target-label {
+  text-align: center;
+  color: #9b9bab;
+  font-size: 12px;
+  letter-spacing: 3px;
+  font-weight: 700;
 }
 
-.unit{
-  text-align:center;
-  color:#aaa9b7;
-  font-size:16px;
-  margin-top:5px;
+.target {
+  text-align: center;
+  margin-top: 8px;
 }
 
-.timer{
-  text-align:center;
-  font-size:48px;
-  font-weight:900;
-  letter-spacing:-2px;
-  color:white;
-  margin-top:20px;
-  min-height:58px;
-  opacity:0;
-  transform:scale(.96);
-  transition:.2s ease;
+.timer {
+  font-size: 76px;
+  line-height: 1;
+  font-weight: 950;
+  letter-spacing: -4px;
+  font-variant-numeric: tabular-nums;
 }
 
-.timer.visible{
-  opacity:1;
-  transform:scale(1);
+.unit {
+  text-align: center;
+  color: #aaaaba;
+  font-size: 20px;
+  margin-top: 5px;
 }
 
-.timer.running{
-  color:#c8a9ff;
-  text-shadow:
-    0 0 12px rgba(139,92,255,.7),
-    0 0 35px rgba(139,92,255,.35);
+button {
+  width: 100%;
+  border: 0;
+  border-radius: 22px;
+  padding: 20px;
+  margin-top: 25px;
+  font-size: 22px;
+  font-weight: 900;
+  cursor: pointer;
 }
 
-.timer.result{
-  color:var(--gold);
-  text-shadow:0 0 25px rgba(255,212,92,.3);
+#startBtn {
+  background: white;
+  color: #101016;
 }
 
-.mainBtn{
-  width:100%;
-  height:76px;
-  margin-top:15px;
-  border:0;
-  border-radius:25px;
-  background:#fff;
-  color:#09090d;
-  font-size:25px;
-  font-weight:950;
-  cursor:pointer;
-  box-shadow:0 8px 30px rgba(0,0,0,.25);
-  transition:.15s ease;
+#startBtn.running {
+  background: #ff4964;
+  color: white;
 }
 
-.mainBtn:active{
-  transform:scale(.97);
+.progress {
+  height: 7px;
+  margin-top: 18px;
+  background: #30303d;
+  border-radius: 20px;
+  overflow: hidden;
 }
 
-.mainBtn.stop{
-  background:var(--red);
-  color:white;
-  box-shadow:
-    0 0 30px rgba(255,69,100,.28);
+.progressBar {
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg,#7657ff,#bd72ff);
+  border-radius: 20px;
 }
 
-.progress{
-  height:7px;
-  margin:20px 0 14px;
-  border-radius:20px;
-  background:#292934;
-  overflow:hidden;
+.actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+  margin-top: 15px;
 }
 
-.progressBar{
-  height:100%;
-  width:0%;
-  border-radius:20px;
-  background:linear-gradient(90deg,var(--purple),var(--purple2));
-  transition:width .05s linear;
+.action {
+  margin-top: 0;
+  padding: 18px 10px;
+  background: #292936;
+  color: white;
+  font-size: 16px;
 }
 
-.actions{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:14px;
+.action.friend {
+  background: linear-gradient(135deg,#704cff,#a467ff);
 }
 
-.action{
-  height:76px;
-  border:0;
-  border-radius:24px;
-  color:white;
-  background:#292934;
-  font-size:17px;
-  font-weight:850;
-  cursor:pointer;
+.stats {
+  display: grid;
+  grid-template-columns: repeat(3,1fr);
+  gap: 12px;
+  margin-top: 18px;
 }
 
-.action.challenge{
-  background:linear-gradient(135deg,#7547ff,#a45cff);
+.stat {
+  background: #1c1c27;
+  border: 1px solid rgba(255,255,255,.06);
+  border-radius: 20px;
+  padding: 18px 5px;
+  text-align: center;
 }
 
-.stats{
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:12px;
-  margin-top:25px;
+.stat strong {
+  display: block;
+  font-size: 28px;
+  font-variant-numeric: tabular-nums;
 }
 
-.stat{
-  background:#171720;
-  border:1px solid #292934;
-  border-radius:23px;
-  padding:18px 7px;
-  text-align:center;
+.stat span {
+  display: block;
+  margin-top: 7px;
+  color: #9696a6;
+  font-size: 11px;
+  letter-spacing: 1px;
 }
 
-.statValue{
-  font-size:27px;
-  font-weight:900;
+.streak {
+  margin-top: 16px;
+  padding: 18px;
+  border-radius: 22px;
+  background: #1c1c27;
+  border: 1px solid rgba(255,255,255,.06);
 }
 
-.statLabel{
-  color:#898997;
-  font-size:11px;
-  letter-spacing:1px;
-  margin-top:5px;
+.streak strong {
+  font-size: 17px;
 }
 
-.streak{
-  margin-top:16px;
-  padding:17px 18px;
-  background:#171720;
-  border:1px solid #292934;
-  border-radius:23px;
+.streak small {
+  display: block;
+  margin-top: 5px;
+  color: #9696a6;
+  font-size: 13px;
 }
 
-.streakTop{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
+.result {
+  text-align: center;
+  min-height: 26px;
+  margin-top: 18px;
+  font-weight: 800;
 }
 
-.streakTitle{
-  font-size:17px;
-  font-weight:800;
+.win {
+  color: #72f5ae;
 }
 
-.reward{
-  color:var(--gold);
-  font-weight:900;
-}
-
-.streakText{
-  color:#8d8d9b;
-  font-size:13px;
-  margin-top:6px;
-}
-
-.message{
-  text-align:center;
-  min-height:24px;
-  margin-top:16px;
-  font-size:14px;
-  font-weight:700;
-  color:#a9a9b8;
-}
-
-.footer{
-  text-align:center;
-  color:#555562;
-  font-size:12px;
-  margin-top:25px;
+.close {
+  color: #ff7186;
 }
 </style>
 </head>
@@ -287,243 +235,218 @@ h1{
 <div class="app">
 
   <div class="top">
-    <div class="logo">1%</div>
+    <div class="logo">1% CHALLENGE</div>
     <div class="day">SFIDA DI OGGI</div>
   </div>
 
   <div class="badge">⚡ SFIDA DI OGGI</div>
 
-  <h1>Ferma il tempo.<br>Il più vicino vince.</h1>
+  <div class="card">
 
-  <p class="subtitle">
-    Tocca <b>START</b> e prova a fermare il timer
-    il più vicino possibile a <b>1,00 secondo.</b>
-  </p>
+    <h1>Ferma il tempo.<br>Il più vicino vince.</h1>
 
-  <div class="targetLabel">OBIETTIVO</div>
-  <div class="target">1.00</div>
-  <div class="unit">secondi</div>
+    <div class="subtitle">
+      Tocca <b>START</b> e prova a fermare il timer
+      il più vicino possibile a <b>1,00 secondo.</b>
+    </div>
 
-  <!-- TIMER VISIBILE -->
-  <div id="timer" class="timer">0.00</div>
+    <div class="target-label">OBIETTIVO</div>
 
-  <button id="mainBtn" class="mainBtn" onclick="toggleTimer()">
-    START
-  </button>
+    <div class="target">
+      <div class="timer" id="timer">0.00</div>
+      <div class="unit">secondi</div>
+    </div>
 
-  <div class="progress">
-    <div id="progressBar" class="progressBar"></div>
-  </div>
+    <button id="startBtn">START</button>
 
-  <div class="actions">
-    <button class="action" onclick="practice()">
-      🎯 ALLENATI
-    </button>
+    <div class="progress">
+      <div class="progressBar" id="progressBar"></div>
+    </div>
 
-    <button class="action challenge" onclick="shareChallenge()">
-      👥 SFIDA UN AMICO
-    </button>
+    <div class="actions">
+      <button class="action">🎯 ALLENATI</button>
+      <button class="action friend" id="friendBtn">👥 SFIDA UN AMICO</button>
+    </div>
+
+    <div class="result" id="result"></div>
+
   </div>
 
   <div class="stats">
 
     <div class="stat">
-      <div id="record" class="statValue">0.00</div>
-      <div class="statLabel">RECORD</div>
+      <strong id="record">0.00</strong>
+      <span>RECORD</span>
     </div>
 
     <div class="stat">
-      <div id="streak" class="statValue">1 🔥</div>
-      <div class="statLabel">STREAK</div>
+      <strong id="streak">1</strong>
+      <span>STREAK 🔥</span>
     </div>
 
     <div class="stat">
-      <div id="coins" class="statValue">100</div>
-      <div class="statLabel">MONETE</div>
+      <strong id="coins">100</strong>
+      <span>MONETE</span>
     </div>
 
   </div>
 
   <div class="streak">
-
-    <div class="streakTop">
-      <div class="streakTitle">🔥 Torna domani</div>
-      <div class="reward">+25 🪙</div>
-    </div>
-
-    <div class="streakText">
-      La tua streak può crescere.
-    </div>
-
-  </div>
-
-  <div id="message" class="message"></div>
-
-  <div class="footer">
-    Nuova sfida ogni giorno · 1% Challenge
+    <strong>🔥 Torna domani</strong>
+    <small>La tua streak può crescere.</small>
   </div>
 
 </div>
 
 <script>
 
+let running = false;
 let startTime = 0;
-let timerRunning = false;
 let animationFrame = null;
 
-const target = 1.00;
-
 const timer = document.getElementById("timer");
-const mainBtn = document.getElementById("mainBtn");
+const startBtn = document.getElementById("startBtn");
 const progressBar = document.getElementById("progressBar");
+const result = document.getElementById("result");
 const recordEl = document.getElementById("record");
 const coinsEl = document.getElementById("coins");
-const messageEl = document.getElementById("message");
+const friendBtn = document.getElementById("friendBtn");
 
-let record = parseFloat(localStorage.getItem("record")) || 0;
-let coins = parseInt(localStorage.getItem("coins")) || 100;
+let record = Number(localStorage.getItem("record")) || 0;
+let coins = Number(localStorage.getItem("coins")) || 100;
 
 recordEl.textContent = record.toFixed(2);
 coinsEl.textContent = coins;
 
-function formatTime(seconds){
-  return seconds.toFixed(2);
-}
+function updateTimer() {
 
-function updateTimer(){
-
-  if(!timerRunning) return;
+  if (!running) return;
 
   const elapsed = (performance.now() - startTime) / 1000;
 
-  timer.textContent = formatTime(elapsed);
+  timer.textContent = elapsed.toFixed(2);
 
-  /*
-    La barra raggiunge il 100% a 1 secondo.
-    Dopo 1 secondo ricomincia visivamente.
-  */
-  let percentage = (elapsed % 1) * 100;
-
-  progressBar.style.width = percentage + "%";
+  const progress = Math.min(elapsed / 1, 1) * 100;
+  progressBar.style.width = progress + "%";
 
   animationFrame = requestAnimationFrame(updateTimer);
 }
 
-function toggleTimer(){
+function startTimer() {
 
-  if(!timerRunning){
-    startTimer();
-  }else{
-    stopTimer();
-  }
-}
-
-function startTimer(){
-
-  timerRunning = true;
+  running = true;
 
   startTime = performance.now();
 
-  timer.className = "timer visible running";
-
   timer.textContent = "0.00";
 
-  mainBtn.textContent = "STOP";
-  mainBtn.classList.add("stop");
+  result.textContent = "";
 
-  messageEl.textContent = "";
+  startBtn.textContent = "STOP";
+  startBtn.classList.add("running");
 
   progressBar.style.width = "0%";
 
   cancelAnimationFrame(animationFrame);
 
-  updateTimer();
+  animationFrame = requestAnimationFrame(updateTimer);
 }
 
-function stopTimer(){
+function stopTimer() {
 
-  timerRunning = false;
+  if (!running) return;
+
+  running = false;
 
   cancelAnimationFrame(animationFrame);
 
-  const finalTime =
-    (performance.now() - startTime) / 1000;
+  const finalTime = (performance.now() - startTime) / 1000;
 
-  timer.textContent = formatTime(finalTime);
+  timer.textContent = finalTime.toFixed(2);
 
-  timer.className = "timer visible result";
+  const difference = Math.abs(finalTime - 1);
 
-  mainBtn.textContent = "RIPROVA";
-  mainBtn.classList.remove("stop");
-
-  progressBar.style.width =
-    Math.min(finalTime * 100,100) + "%";
-
-  const difference = Math.abs(finalTime - target);
-
-  if(record === 0 || difference < Math.abs(record-target)){
+  if (record === 0 || difference < Math.abs(record - 1)) {
 
     record = finalTime;
 
-    localStorage.setItem(
-      "record",
-      record.toString()
-    );
+    localStorage.setItem("record", record);
 
     recordEl.textContent = record.toFixed(2);
 
-    messageEl.textContent =
-      "🏆 NUOVO RECORD!";
-
-  }else{
-
-    messageEl.textContent =
-      "Distanza dall'obiettivo: " +
-      difference.toFixed(2) +
-      " s";
   }
 
-  coins += 10;
-
-  localStorage.setItem(
-    "coins",
-    coins.toString()
+  const reward = Math.max(
+    5,
+    Math.round(30 - difference * 30)
   );
 
+  coins += reward;
+
+  localStorage.setItem("coins", coins);
+
   coinsEl.textContent = coins;
+
+  if (difference <= 0.03) {
+
+    result.textContent =
+      "🔥 INCREDIBILE! Sei vicinissimo!";
+    result.className = "result win";
+
+  } else if (difference <= 0.10) {
+
+    result.textContent =
+      "⚡ Quasi perfetto! Riprova.";
+
+    result.className = "result win";
+
+  } else {
+
+    result.textContent =
+      "💪 Ci sei quasi. Riprova!";
+
+    result.className = "result close";
+  }
+
+  startBtn.textContent = "RIPROVA";
+  startBtn.classList.remove("running");
 }
 
-function practice(){
+startBtn.addEventListener("click", function() {
 
-  messageEl.textContent =
-    "🎯 Modalità allenamento: prova ancora!";
+  if (running) {
+    stopTimer();
+  } else {
+    startTimer();
+  }
 
-  startTimer();
-}
+});
 
-function shareChallenge(){
+friendBtn.addEventListener("click", async function() {
 
   const text =
-    "🔥 Riesci a fermare il tempo esattamente a 1,00 secondo? Prova la 1% Challenge!";
+    "🔥 Ho provato la 1% Challenge! " +
+    "Riesci a fermare il timer a 1,00 secondo?";
 
-  if(navigator.share){
+  if (navigator.share) {
 
-    navigator.share({
-      title:"1% Challenge",
-      text:text,
-      url:window.location.href
-    });
+    try {
 
-  }else{
+      await navigator.share({
+        title: "1% Challenge",
+        text: text,
+        url: window.location.href
+      });
 
-    navigator.clipboard.writeText(
-      text + " " + window.location.href
-    );
+    } catch (e) {}
 
-    messageEl.textContent =
-      "🔗 Link copiato! Mandalo ai tuoi amici.";
+  } else {
+
+    alert(text);
+
   }
-}
+
+});
 
 </script>
 
