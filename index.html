@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,user-scalable=no">
+<meta name="theme-color" content="#08080b">
+<title>1% Challenge</title>
+<style>
+:root{font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","Segoe UI",sans-serif;color:#fff;background:#08080b}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+body{margin:0;min-height:100vh;background:radial-gradient(circle at 50% 0,#20202a 0,#0b0b10 38%,#08080b 100%);display:flex;justify-content:center}
+.app{width:100%;max-width:460px;min-height:100vh;padding:calc(24px + env(safe-area-inset-top)) 20px calc(20px + env(safe-area-inset-bottom));display:flex;flex-direction:column}
+.top{display:flex;justify-content:space-between;align-items:center}
+.logo{font-size:46px;line-height:1;font-weight:950;letter-spacing:-4px}
+.day{font-size:12px;color:#9b9ba5;letter-spacing:1.4px;text-transform:uppercase}
+.card{margin-top:26px;background:rgba(22,22,29,.88);border:1px solid #2b2b35;border-radius:28px;padding:28px 22px;text-align:center;box-shadow:0 20px 60px rgba(0,0,0,.28)}
+.pill{display:inline-block;background:#292932;color:#d8d8df;border-radius:99px;padding:7px 12px;font-size:11px;font-weight:800;letter-spacing:1px}
+h1{font-size:28px;letter-spacing:-1px;margin:17px 0 8px}
+p{color:#a8a8b2;line-height:1.5;margin:8px 0}
+.big{font-size:78px;font-weight:950;letter-spacing:-5px;margin:22px 0 8px;font-variant-numeric:tabular-nums}
+.target{font-size:12px;color:#8f8f99;text-transform:uppercase;letter-spacing:1.5px}
+button{width:100%;border:0;border-radius:18px;padding:18px;margin-top:18px;font-size:17px;font-weight:900;cursor:pointer}
+.primary{background:#fff;color:#09090c}
+.secondary{background:#292932;color:#fff}
+button:active{transform:scale(.985)}
+.score{font-size:62px;font-weight:950;letter-spacing:-4px;margin:16px 0 0}
+.seconds{font-size:19px;color:#c5c5cc}
+.record{margin-top:16px;font-size:12px;color:#8f8f99}
+.hidden{display:none}
+.footer{margin-top:auto;text-align:center;color:#5e5e68;font-size:11px;padding-top:22px}
+.sharemsg{font-size:12px;color:#a8a8b2;margin-top:12px;min-height:18px}
+</style>
+</head>
+<body>
+<main class="app">
+  <div class="top">
+    <div class="logo">1%</div>
+    <div class="day">DAILY CHALLENGE<br><span id="challengeNo">#001</span></div>
+  </div>
+
+  <section id="home" class="card">
+    <span class="pill">OGGI</span>
+    <h1>Fermati a 5,00 secondi</h1>
+    <p>Parti quando vuoi. Ferma il timer il più vicino possibile a <b>5,00</b>.</p>
+    <button class="primary" onclick="startGame()">GIOCA</button>
+  </section>
+
+  <section id="game" class="card hidden">
+    <div class="target">Obiettivo</div>
+    <div class="big" id="timer">0,00</div>
+    <p>Non guardare troppo il tempo. Fermati quando pensi di essere a 5,00.</p>
+    <button class="primary" onclick="stopGame()">STOP</button>
+  </section>
+
+  <section id="result" class="card hidden">
+    <span class="pill" id="badge">RISULTATO</span>
+    <div class="score" id="score">0%</div>
+    <div class="seconds" id="seconds">0,00 secondi</div>
+    <div class="record" id="record"></div>
+    <button class="primary" onclick="shareResult()">SFIDA UN AMICO</button>
+    <button class="secondary" onclick="startGame()">RIPROVA</button>
+    <div class="sharemsg" id="sharemsg"></div>
+  </section>
+
+  <div class="footer">Una sfida. Pochi secondi. Un record da battere.</div>
+</main>
+<script>
+let started=0, interval=0, best=Number(localStorage.getItem("onePctBest")||0);
+const $=id=>document.getElementById(id);
+function show(id){["home","game","result"].forEach(x=>$(x).classList.toggle("hidden",x!==id))}
+function startGame(){
+  clearInterval(interval);
+  $("sharemsg").textContent="";
+  $("timer").textContent="0,00";
+  show("game");
+  started=performance.now();
+  interval=setInterval(()=>{
+    $("timer").textContent=((performance.now()-started)/1000).toFixed(2).replace(".",",");
+  },20);
+}
+function stopGame(){
+  clearInterval(interval);
+  const sec=(performance.now()-started)/1000;
+  const error=Math.abs(sec-5);
+  const score=Math.max(0,100-(error*20));
+  const s=score.toFixed(2);
+  const record=score>best;
+  if(record){best=score;localStorage.setItem("onePctBest",String(best))}
+  $("score").textContent=s+"%";
+  $("seconds").textContent=sec.toFixed(2).replace(".",",")+" secondi";
+  $("badge").textContent=record?"🏆 NUOVO RECORD":"RISULTATO";
+  $("record").textContent=record?"Hai battuto il tuo record.":"Il tuo record: "+best.toFixed(2)+"%";
+  show("result");
+}
+async function shareResult(){
+  const text="Ho fatto "+$("score").textContent+" su 1% Challenge. Riesci a battermi?";
+  if(navigator.share){
+    try{await navigator.share({title:"1% Challenge",text});return}catch(e){}
+  }
+  try{
+    await navigator.clipboard.writeText(text);
+    $("sharemsg").textContent="Copiato! Incollalo su WhatsApp, Instagram o dove vuoi.";
+  }catch(e){$("sharemsg").textContent=text}
+}
+</script>
+</body>
+</html>
