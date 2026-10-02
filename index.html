@@ -1,880 +1,529 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="it">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="theme-color" content="#08080b">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#0b0b12">
 <title>1% Challenge</title>
 
 <style>
 :root{
-  --bg:#08080b;
-  --panel:#15151d;
-  --panel2:#20202a;
-  --line:#30303c;
-  --text:#f7f7fb;
-  --muted:#9b9ba8;
-  --accent:#8b5cf6;
-  --accent2:#c084fc;
-  --good:#35d07f;
-  --gold:#ffbf47;
+  --bg:#08080f;
+  --card:#15151f;
+  --card2:#1d1d29;
+  --text:#ffffff;
+  --muted:#9292a3;
+  --purple:#8b5cff;
+  --purple2:#b06cff;
+  --red:#ff4564;
+  --green:#35d07f;
+  --gold:#ffd45c;
 }
 
 *{
   box-sizing:border-box;
-  -webkit-tap-highlight-color:transparent
+  -webkit-tap-highlight-color:transparent;
 }
 
-html,body{
+body{
   margin:0;
-  min-height:100%;
+  min-height:100vh;
   background:
-  radial-gradient(circle at 50% -10%,#29203f 0,#111119 34%,#08080b 70%);
+    radial-gradient(circle at 50% 0%,#21164a 0%,#0d0d16 35%,#08080f 70%);
   color:var(--text);
-  font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","Segoe UI",sans-serif
+  font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display",
+  "Helvetica Neue",Arial,sans-serif;
 }
-
-body{min-height:100vh}
 
 .app{
   width:100%;
   max-width:460px;
-  margin:0 auto;
-  padding:28px 16px 34px
+  min-height:100vh;
+  margin:auto;
+  padding:22px 18px 35px;
 }
 
 .top{
   display:flex;
   justify-content:space-between;
-  align-items:flex-start;
-  padding:4px 2px 14px
+  align-items:center;
 }
 
 .logo{
-  font-size:44px;
-  line-height:.9;
-  font-weight:950;
-  letter-spacing:-3px
+  font-size:26px;
+  font-weight:900;
+  letter-spacing:-1px;
 }
 
 .day{
-  font-size:12px;
   color:var(--muted);
-  letter-spacing:2px;
-  text-transform:uppercase;
-  text-align:right;
-  line-height:1.35
-}
-
-.card{
-  margin-top:10px;
-  padding:26px 18px 20px;
-  border:1px solid var(--line);
-  border-radius:30px;
-  background:linear-gradient(
-    180deg,
-    rgba(25,25,34,.96),
-    rgba(15,15,21,.96)
-  );
-  box-shadow:0 20px 60px rgba(0,0,0,.32)
-}
-
-.pill{
-  display:inline-flex;
-  align-items:center;
-  gap:8px;
-  padding:9px 13px;
-  border-radius:999px;
-  background:#2a2933;
-  color:#d9d7e3;
   font-size:12px;
-  font-weight:850;
-  letter-spacing:1.4px
+  letter-spacing:1px;
+  font-weight:700;
+}
+
+.badge{
+  display:inline-flex;
+  margin-top:24px;
+  padding:9px 15px;
+  border-radius:30px;
+  background:#272432;
+  color:#e8e5ef;
+  font-size:12px;
+  font-weight:800;
+  letter-spacing:1.5px;
 }
 
 h1{
-  font-size:31px;
-  line-height:1.03;
-  letter-spacing:-1.2px;
-  margin:22px 0 10px
+  font-size:34px;
+  line-height:1.05;
+  letter-spacing:-1.5px;
+  margin:18px 0 10px;
 }
 
-.sub{
-  font-size:16px;
-  line-height:1.5;
+.subtitle{
   color:var(--muted);
-  margin:0
+  font-size:17px;
+  line-height:1.5;
+  margin:0;
 }
 
 .targetLabel{
   text-align:center;
-  color:var(--muted);
+  margin-top:30px;
+  color:#8d8d9d;
   font-size:12px;
-  letter-spacing:2px;
-  margin-top:25px
+  letter-spacing:3px;
+  font-weight:700;
 }
 
 .target{
   text-align:center;
   font-size:76px;
+  line-height:1;
   font-weight:950;
   letter-spacing:-4px;
-  line-height:1;
-  margin:7px 0 4px
+  margin-top:7px;
+  text-shadow:0 0 30px rgba(139,92,255,.25);
 }
 
-.targetUnit{
+.unit{
   text-align:center;
-  color:var(--muted);
-  font-size:18px;
-  margin-bottom:20px
+  color:#aaa9b7;
+  font-size:16px;
+  margin-top:5px;
 }
 
-button{
-  border:0;
-  font:inherit;
-  cursor:pointer
+.timer{
+  text-align:center;
+  font-size:48px;
+  font-weight:900;
+  letter-spacing:-2px;
+  color:white;
+  margin-top:20px;
+  min-height:58px;
+  opacity:0;
+  transform:scale(.96);
+  transition:.2s ease;
 }
 
-.primary{
+.timer.visible{
+  opacity:1;
+  transform:scale(1);
+}
+
+.timer.running{
+  color:#c8a9ff;
+  text-shadow:
+    0 0 12px rgba(139,92,255,.7),
+    0 0 35px rgba(139,92,255,.35);
+}
+
+.timer.result{
+  color:var(--gold);
+  text-shadow:0 0 25px rgba(255,212,92,.3);
+}
+
+.mainBtn{
   width:100%;
-  min-height:62px;
-  border-radius:22px;
+  height:76px;
+  margin-top:15px;
+  border:0;
+  border-radius:25px;
   background:#fff;
-  color:#0a0a0c;
-  font-size:21px;
+  color:#09090d;
+  font-size:25px;
   font-weight:950;
-  transition:.15s
+  cursor:pointer;
+  box-shadow:0 8px 30px rgba(0,0,0,.25);
+  transition:.15s ease;
 }
 
-.primary:active,
-.secondary:active,
-.share:active{
-  transform:scale(.985)
+.mainBtn:active{
+  transform:scale(.97);
+}
+
+.mainBtn.stop{
+  background:var(--red);
+  color:white;
+  box-shadow:
+    0 0 30px rgba(255,69,100,.28);
 }
 
 .progress{
-  height:9px;
-  background:#2b2b36;
-  border-radius:99px;
+  height:7px;
+  margin:20px 0 14px;
+  border-radius:20px;
+  background:#292934;
   overflow:hidden;
-  margin:20px 0 14px
 }
 
-.progress span{
-  display:block;
+.progressBar{
   height:100%;
-  width:55%;
-  background:linear-gradient(90deg,#7c4dff,#c084fc);
-  border-radius:99px;
-  transition:width .3s
+  width:0%;
+  border-radius:20px;
+  background:linear-gradient(90deg,var(--purple),var(--purple2));
+  transition:width .05s linear;
 }
 
 .actions{
   display:grid;
   grid-template-columns:1fr 1fr;
-  gap:12px
+  gap:14px;
 }
 
-.secondary,
-.share{
-  min-height:62px;
-  border-radius:22px;
-  background:#292933;
-  color:#fff;
-  font-size:16px;
-  font-weight:900
+.action{
+  height:76px;
+  border:0;
+  border-radius:24px;
+  color:white;
+  background:#292934;
+  font-size:17px;
+  font-weight:850;
+  cursor:pointer;
 }
 
-.share{
-  background:linear-gradient(135deg,#7c4dff,#a970ff)
+.action.challenge{
+  background:linear-gradient(135deg,#7547ff,#a45cff);
 }
 
 .stats{
   display:grid;
   grid-template-columns:repeat(3,1fr);
-  gap:10px;
-  margin-top:14px
+  gap:12px;
+  margin-top:25px;
 }
 
 .stat{
-  background:rgba(25,25,34,.92);
-  border:1px solid var(--line);
-  border-radius:22px;
-  padding:15px 8px;
-  text-align:center
+  background:#171720;
+  border:1px solid #292934;
+  border-radius:23px;
+  padding:18px 7px;
+  text-align:center;
 }
 
-.stat b{
-  display:block;
-  font-size:25px;
-  letter-spacing:-1px
+.statValue{
+  font-size:27px;
+  font-weight:900;
 }
 
-.stat span{
-  display:block;
-  color:var(--muted);
+.statLabel{
+  color:#898997;
   font-size:11px;
-  margin-top:4px;
-  text-transform:uppercase;
-  letter-spacing:1px
+  letter-spacing:1px;
+  margin-top:5px;
 }
 
-.reward{
+.streak{
+  margin-top:16px;
+  padding:17px 18px;
+  background:#171720;
+  border:1px solid #292934;
+  border-radius:23px;
+}
+
+.streakTop{
   display:flex;
   justify-content:space-between;
   align-items:center;
-  margin-top:14px;
-  padding:17px 18px;
-  border:1px solid var(--line);
-  border-radius:22px;
-  background:rgba(25,25,34,.92)
 }
 
-.reward strong{
-  font-size:16px
+.streakTitle{
+  font-size:17px;
+  font-weight:800;
 }
 
-.reward small{
-  display:block;
-  color:var(--muted);
-  margin-top:3px
-}
-
-.coin{
+.reward{
   color:var(--gold);
-  font-weight:900
+  font-weight:900;
+}
+
+.streakText{
+  color:#8d8d9b;
+  font-size:13px;
+  margin-top:6px;
+}
+
+.message{
+  text-align:center;
+  min-height:24px;
+  margin-top:16px;
+  font-size:14px;
+  font-weight:700;
+  color:#a9a9b8;
 }
 
 .footer{
   text-align:center;
-  color:#70707c;
+  color:#555562;
   font-size:12px;
-  margin-top:25px
-}
-
-.modal{
-  position:fixed;
-  inset:0;
-  background:rgba(0,0,0,.72);
-  backdrop-filter:blur(10px);
-  display:none;
-  align-items:flex-end;
-  justify-content:center;
-  padding:14px;
-  z-index:20
-}
-
-.modal.show{
-  display:flex
-}
-
-.sheet{
-  width:100%;
-  max-width:460px;
-  background:#191921;
-  border:1px solid #353541;
-  border-radius:28px;
-  padding:22px 18px 18px
-}
-
-.sheet h2{
-  margin:0 0 8px;
-  font-size:23px
-}
-
-.sheet p{
-  color:var(--muted);
-  line-height:1.45
-}
-
-.close{
-  width:100%;
-  height:54px;
-  border-radius:18px;
-  background:#fff;
-  font-weight:900
-}
-
-.resultBig{
-  text-align:center;
-  font-size:70px;
-  font-weight:950;
-  letter-spacing:-4px;
-  margin:8px 0
-}
-
-.badge{
-  text-align:center;
-  color:var(--gold);
-  font-weight:900;
-  margin-bottom:4px
-}
-
-.flash{
-  animation:flash .45s ease
-}
-
-@keyframes flash{
-  50%{
-    transform:scale(1.04);
-    filter:brightness(1.35)
-  }
-}
-
-.shake{
-  animation:shake .25s ease
-}
-
-@keyframes shake{
-  25%{transform:translateX(-5px)}
-  75%{transform:translateX(5px)}
+  margin-top:25px;
 }
 </style>
 </head>
 
 <body>
 
-<main class="app">
+<div class="app">
 
-<header class="top">
-  <div class="logo">1%</div>
-
-  <div class="day">
-    DAILY CHALLENGE<br>
-    <b id="dayNumber">#001</b>
-  </div>
-</header>
-
-
-<section class="card">
-
-  <div class="pill">
-    ⚡ SFIDA DI OGGI
+  <div class="top">
+    <div class="logo">1%</div>
+    <div class="day">SFIDA DI OGGI</div>
   </div>
 
-  <h1>
-    Ferma il tempo.<br>
-    Il più vicino vince.
-  </h1>
+  <div class="badge">⚡ SFIDA DI OGGI</div>
 
-  <p class="sub">
+  <h1>Ferma il tempo.<br>Il più vicino vince.</h1>
+
+  <p class="subtitle">
     Tocca <b>START</b> e prova a fermare il timer
-    il più vicino possibile a <b>1,00 secondo</b>.
+    il più vicino possibile a <b>1,00 secondo.</b>
   </p>
 
+  <div class="targetLabel">OBIETTIVO</div>
+  <div class="target">1.00</div>
+  <div class="unit">secondi</div>
 
-  <div class="targetLabel">
-    OBIETTIVO
-  </div>
+  <!-- TIMER VISIBILE -->
+  <div id="timer" class="timer">0.00</div>
 
-  <div class="target">
-    1.00
-  </div>
-
-  <div class="targetUnit">
-    secondi
-  </div>
-
-
-  <button class="primary" id="startBtn">
+  <button id="mainBtn" class="mainBtn" onclick="toggleTimer()">
     START
   </button>
 
-
   <div class="progress">
-    <span id="bar"></span>
+    <div id="progressBar" class="progressBar"></div>
   </div>
 
-
   <div class="actions">
-
-    <button class="secondary" id="practiceBtn">
+    <button class="action" onclick="practice()">
       🎯 ALLENATI
     </button>
 
-    <button class="share" id="shareBtn">
+    <button class="action challenge" onclick="shareChallenge()">
       👥 SFIDA UN AMICO
     </button>
-
   </div>
 
-</section>
+  <div class="stats">
 
-
-<section class="stats">
-
-  <div class="stat">
-    <b id="record">—</b>
-    <span>Record</span>
-  </div>
-
-  <div class="stat">
-    <b id="streak">0</b>
-    <span>Streak 🔥</span>
-  </div>
-
-  <div class="stat">
-    <b id="coins">100</b>
-    <span>Monete</span>
-  </div>
-
-</section>
-
-
-<section class="reward" id="reward">
-
-  <div>
-    <strong>🔥 Torna domani</strong>
-    <small>La tua streak può crescere.</small>
-  </div>
-
-  <div class="coin">
-    +25 🪙
-  </div>
-
-</section>
-
-
-<div class="footer">
-  Nuova sfida ogni giorno · 1% Challenge
-</div>
-
-</main>
-
-
-<div class="modal" id="modal">
-
-  <div class="sheet">
-
-    <div class="badge" id="resultBadge">
-      NUOVO RECORD 🏆
+    <div class="stat">
+      <div id="record" class="statValue">0.00</div>
+      <div class="statLabel">RECORD</div>
     </div>
 
-    <div class="resultBig" id="resultValue">
-      1.00
+    <div class="stat">
+      <div id="streak" class="statValue">1 🔥</div>
+      <div class="statLabel">STREAK</div>
     </div>
 
-    <p id="resultText" style="text-align:center">
-      Distanza dall'obiettivo: 0,00s
-    </p>
+    <div class="stat">
+      <div id="coins" class="statValue">100</div>
+      <div class="statLabel">MONETE</div>
+    </div>
 
-    <button class="primary" id="retryBtn">
-      RIPROVA
-    </button>
+  </div>
 
-    <button
-      class="close"
-      id="closeBtn"
-      style="margin-top:10px"
-    >
-      CONTINUA
-    </button>
+  <div class="streak">
 
+    <div class="streakTop">
+      <div class="streakTitle">🔥 Torna domani</div>
+      <div class="reward">+25 🪙</div>
+    </div>
+
+    <div class="streakText">
+      La tua streak può crescere.
+    </div>
+
+  </div>
+
+  <div id="message" class="message"></div>
+
+  <div class="footer">
+    Nuova sfida ogni giorno · 1% Challenge
   </div>
 
 </div>
-
 
 <script>
 
-const KEY="onePercentChallengeV2";
+let startTime = 0;
+let timerRunning = false;
+let animationFrame = null;
 
-const state=JSON.parse(
-  localStorage.getItem(KEY)||"{}"
-);
+const target = 1.00;
 
-state.record=
-  typeof state.record==="number"
-  ?state.record
-  :null;
+const timer = document.getElementById("timer");
+const mainBtn = document.getElementById("mainBtn");
+const progressBar = document.getElementById("progressBar");
+const recordEl = document.getElementById("record");
+const coinsEl = document.getElementById("coins");
+const messageEl = document.getElementById("message");
 
-state.streak=
-  state.streak||0;
+let record = parseFloat(localStorage.getItem("record")) || 0;
+let coins = parseInt(localStorage.getItem("coins")) || 100;
 
-state.coins=
-  typeof state.coins==="number"
-  ?state.coins
-  :100;
+recordEl.textContent = record.toFixed(2);
+coinsEl.textContent = coins;
 
-state.lastDay=
-  state.lastDay||"";
+function formatTime(seconds){
+  return seconds.toFixed(2);
+}
 
-state.todayPlayed=
-  !!state.todayPlayed;
+function updateTimer(){
 
+  if(!timerRunning) return;
 
-const $=id=>
-  document.getElementById(id);
+  const elapsed = (performance.now() - startTime) / 1000;
 
+  timer.textContent = formatTime(elapsed);
 
-const today=new Date();
+  /*
+    La barra raggiunge il 100% a 1 secondo.
+    Dopo 1 secondo ricomincia visivamente.
+  */
+  let percentage = (elapsed % 1) * 100;
 
-const dayKey=
-  today.toISOString().slice(0,10);
+  progressBar.style.width = percentage + "%";
 
+  animationFrame = requestAnimationFrame(updateTimer);
+}
 
-const dayOfYear=
-  Math.floor(
-    (
-      Date.UTC(
-        today.getFullYear(),
-        today.getMonth(),
-        today.getDate()
-      )
-      -
-      Date.UTC(
-        today.getFullYear(),
-        0,
-        0
-      )
-    )/86400000
-  );
+function toggleTimer(){
 
+  if(!timerRunning){
+    startTimer();
+  }else{
+    stopTimer();
+  }
+}
 
-$("dayNumber").textContent=
-  "#"+String(dayOfYear).padStart(3,"0");
+function startTimer(){
 
+  timerRunning = true;
 
-if(
-  state.lastDay &&
-  state.lastDay!==dayKey
-){
+  startTime = performance.now();
 
-  const prev=
-    new Date(state.lastDay+"T00:00:00");
+  timer.className = "timer visible running";
 
-  const now=
-    new Date(dayKey+"T00:00:00");
+  timer.textContent = "0.00";
 
-  const diff=
-    Math.round(
-      (now-prev)/86400000
+  mainBtn.textContent = "STOP";
+  mainBtn.classList.add("stop");
+
+  messageEl.textContent = "";
+
+  progressBar.style.width = "0%";
+
+  cancelAnimationFrame(animationFrame);
+
+  updateTimer();
+}
+
+function stopTimer(){
+
+  timerRunning = false;
+
+  cancelAnimationFrame(animationFrame);
+
+  const finalTime =
+    (performance.now() - startTime) / 1000;
+
+  timer.textContent = formatTime(finalTime);
+
+  timer.className = "timer visible result";
+
+  mainBtn.textContent = "RIPROVA";
+  mainBtn.classList.remove("stop");
+
+  progressBar.style.width =
+    Math.min(finalTime * 100,100) + "%";
+
+  const difference = Math.abs(finalTime - target);
+
+  if(record === 0 || difference < Math.abs(record-target)){
+
+    record = finalTime;
+
+    localStorage.setItem(
+      "record",
+      record.toString()
     );
 
+    recordEl.textContent = record.toFixed(2);
 
-  if(diff===1){
-
-    state.streak++;
+    messageEl.textContent =
+      "🏆 NUOVO RECORD!";
 
   }else{
 
-    state.streak=0;
-
+    messageEl.textContent =
+      "Distanza dall'obiettivo: " +
+      difference.toFixed(2) +
+      " s";
   }
 
-
-  state.todayPlayed=false;
-
-  state.lastDay=dayKey;
-
-  state.coins+=25;
-
-}else if(!state.lastDay){
-
-  state.lastDay=dayKey;
-
-}
-
-
-function save(){
+  coins += 10;
 
   localStorage.setItem(
-    KEY,
-    JSON.stringify(state)
+    "coins",
+    coins.toString()
   );
 
+  coinsEl.textContent = coins;
 }
 
+function practice(){
 
-function render(){
+  messageEl.textContent =
+    "🎯 Modalità allenamento: prova ancora!";
 
-  $("record").textContent=
-    state.record===null
-    ?"—"
-    :state.record.toFixed(2);
-
-  $("streak").textContent=
-    state.streak;
-
-  $("coins").textContent=
-    state.coins;
-
+  startTimer();
 }
 
+function shareChallenge(){
 
-render();
+  const text =
+    "🔥 Riesci a fermare il tempo esattamente a 1,00 secondo? Prova la 1% Challenge!";
 
-save();
+  if(navigator.share){
 
-
-let running=false;
-
-let startTime=0;
-
-let raf=0;
-
-let practice=false;
-
-
-function startGame(){
-
-  if(running)return;
-
-  running=true;
-
-  $("startBtn").textContent="STOP";
-
-  $("startBtn").style.background="#ff4d67";
-
-  $("startBtn").style.color="#fff";
-
-  $("bar").style.width="0%";
-
-  startTime=
-    performance.now();
-
-  tick();
-
-}
-
-
-function tick(){
-
-  if(!running)return;
-
-  const elapsed=
-    (performance.now()-startTime)/1000;
-
-  const pct=
-    Math.min(
-      elapsed/1.6*100,
-      100
-    );
-
-  $("bar").style.width=
-    pct+"%";
-
-  raf=
-    requestAnimationFrame(tick);
-
-}
-
-
-function stopGame(){
-
-  if(!running)return;
-
-  running=false;
-
-  cancelAnimationFrame(raf);
-
-
-  const value=
-    (performance.now()-startTime)/1000;
-
-
-  const distance=
-    Math.abs(value-1);
-
-
-  $("startBtn").textContent=
-    "START";
-
-  $("startBtn").style.background=
-    "#fff";
-
-  $("startBtn").style.color=
-    "#0a0a0c";
-
-
-  $("bar").style.width=
-    Math.min(
-      value/1.6*100,
-      100
-    )+"%";
-
-
-  let isRecord=
-    state.record===null ||
-    distance<
-    Math.abs(state.record-1);
-
-
-  if(isRecord){
-
-    state.record=value;
-
-    state.coins+=10;
-
-    $("record")
-      .classList.add("flash");
-
-    setTimeout(
-      ()=>
-        $("record")
-        .classList.remove("flash"),
-      500
-    );
-
-  }
-
-
-  if(
-    !practice &&
-    !state.todayPlayed
-  ){
-
-    state.todayPlayed=true;
-
-    state.streak=
-      Math.max(
-        1,
-        state.streak
-      );
-
-  }
-
-
-  state.coins+=1;
-
-
-  save();
-
-  render();
-
-
-  $("resultBadge").textContent=
-    isRecord
-    ?"NUOVO RECORD 🏆"
-    :"BUON RISULTATO 🔥";
-
-
-  $("resultValue").textContent=
-    value.toFixed(2);
-
-
-  $("resultText").textContent=
-    "Sei a "+
-    distance.toFixed(2)+
-    "s dall'obiettivo di 1,00s.";
-
-
-  $("modal")
-    .classList
-    .add("show");
-
-}
-
-
-$("startBtn").onclick=()=>
-  running
-  ?stopGame()
-  :startGame();
-
-
-$("practiceBtn").onclick=()=>{
-
-  practice=true;
-
-  $("modal")
-    .classList
-    .remove("show");
-
-  $("startBtn")
-    .scrollIntoView({
-      behavior:"smooth",
-      block:"center"
+    navigator.share({
+      title:"1% Challenge",
+      text:text,
+      url:window.location.href
     });
 
-};
+  }else{
 
+    navigator.clipboard.writeText(
+      text + " " + window.location.href
+    );
 
-$("retryBtn").onclick=()=>{
-
-  $("modal")
-    .classList
-    .remove("show");
-
-  setTimeout(
-    startGame,
-    180
-  );
-
-};
-
-
-$("closeBtn").onclick=()=>{
-
-  $("modal")
-    .classList
-    .remove("show");
-
-};
-
-
-$("shareBtn").onclick=async()=>{
-
-  const score=
-    state.record===null
-    ?"—"
-    :state.record.toFixed(2);
-
-
-  const text=
-    `Ho fatto ${score}s nella 1% Challenge 🎯
-Riesci a battermi? 😈`;
-
-
-  try{
-
-    if(navigator.share){
-
-      await navigator.share({
-
-        title:"1% Challenge",
-
-        text,
-
-        url:location.href
-
-      });
-
-    }else{
-
-      await navigator.clipboard.writeText(
-        text+" "+location.href
-      );
-
-      alert(
-        "Sfida copiata! Mandala ai tuoi amici 😈"
-      );
-
-    }
-
-  }catch(e){}
-
-};
-
-
-$("modal").addEventListener(
-  "click",
-  e=>{
-
-    if(
-      e.target.id==="modal"
-    ){
-
-      $("modal")
-        .classList
-        .remove("show");
-
-    }
-
+    messageEl.textContent =
+      "🔗 Link copiato! Mandalo ai tuoi amici.";
   }
-);
+}
 
 </script>
 
