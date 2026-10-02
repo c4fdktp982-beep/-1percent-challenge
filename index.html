@@ -2,106 +2,684 @@
 <html lang="it">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,user-scalable=no">
-<meta name="theme-color" content="#08080b">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#08090f">
 <title>1% Challenge</title>
+
 <style>
-:root{font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","Segoe UI",sans-serif;color:#fff;background:#08080b}
-*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
-body{margin:0;min-height:100vh;background:radial-gradient(circle at 50% 0,#20202a 0,#0b0b10 38%,#08080b 100%);display:flex;justify-content:center}
-.app{width:100%;max-width:460px;min-height:100vh;padding:calc(24px + env(safe-area-inset-top)) 20px calc(20px + env(safe-area-inset-bottom));display:flex;flex-direction:column}
-.top{display:flex;justify-content:space-between;align-items:center}
-.logo{font-size:46px;line-height:1;font-weight:950;letter-spacing:-4px}
-.day{font-size:12px;color:#9b9ba5;letter-spacing:1.4px;text-transform:uppercase}
-.card{margin-top:26px;background:rgba(22,22,29,.88);border:1px solid #2b2b35;border-radius:28px;padding:28px 22px;text-align:center;box-shadow:0 20px 60px rgba(0,0,0,.28)}
-.pill{display:inline-block;background:#292932;color:#d8d8df;border-radius:99px;padding:7px 12px;font-size:11px;font-weight:800;letter-spacing:1px}
-h1{font-size:28px;letter-spacing:-1px;margin:17px 0 8px}
-p{color:#a8a8b2;line-height:1.5;margin:8px 0}
-.big{font-size:78px;font-weight:950;letter-spacing:-5px;margin:22px 0 8px;font-variant-numeric:tabular-nums}
-.target{font-size:12px;color:#8f8f99;text-transform:uppercase;letter-spacing:1.5px}
-button{width:100%;border:0;border-radius:18px;padding:18px;margin-top:18px;font-size:17px;font-weight:900;cursor:pointer}
-.primary{background:#fff;color:#09090c}
-.secondary{background:#292932;color:#fff}
-button:active{transform:scale(.985)}
-.score{font-size:62px;font-weight:950;letter-spacing:-4px;margin:16px 0 0}
-.seconds{font-size:19px;color:#c5c5cc}
-.record{margin-top:16px;font-size:12px;color:#8f8f99}
-.hidden{display:none}
-.footer{margin-top:auto;text-align:center;color:#5e5e68;font-size:11px;padding-top:22px}
-.sharemsg{font-size:12px;color:#a8a8b2;margin-top:12px;min-height:18px}
+:root{
+--bg:#08090f;
+--card:#151620;
+--card2:#1d1e29;
+--text:#f7f7fb;
+--muted:#9294a5;
+--accent:#7c5cff;
+--accent2:#22d3a7;
+}
+
+*{
+box-sizing:border-box;
+-webkit-tap-highlight-color:transparent;
+}
+
+body{
+margin:0;
+min-height:100vh;
+background:
+radial-gradient(circle at 50% -10%,#29233e 0,#11121b 34%,#08090f 70%);
+color:var(--text);
+font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+}
+
+button{
+font:inherit;
+border:0;
+cursor:pointer;
+}
+
+.app{
+width:100%;
+max-width:480px;
+margin:auto;
+min-height:100vh;
+padding:20px 18px 34px;
+}
+
+.top{
+display:flex;
+align-items:center;
+justify-content:space-between;
+padding-top:8px;
+}
+
+.logo{
+font-size:42px;
+font-weight:950;
+letter-spacing:-3px;
+}
+
+.logo span{
+color:var(--accent);
+}
+
+.day{
+text-align:right;
+color:var(--muted);
+font-size:11px;
+letter-spacing:2px;
+line-height:1.4;
+}
+
+.card{
+margin-top:22px;
+background:linear-gradient(
+180deg,
+rgba(27,28,39,.96),
+rgba(16,17,25,.98)
+);
+border:1px solid #30313e;
+border-radius:28px;
+padding:22px;
+box-shadow:0 18px 55px rgba(0,0,0,.28);
+}
+
+.badge{
+display:inline-flex;
+align-items:center;
+gap:7px;
+background:#292a36;
+border-radius:999px;
+padding:9px 14px;
+color:#d9d9e4;
+font-weight:800;
+font-size:12px;
+letter-spacing:1px;
+}
+
+h1{
+font-size:28px;
+line-height:1.05;
+margin:17px 0 8px;
+letter-spacing:-1px;
+}
+
+.sub{
+color:var(--muted);
+line-height:1.5;
+margin:0;
+}
+
+.target{
+font-size:12px;
+text-align:center;
+color:#858797;
+letter-spacing:1px;
+text-transform:uppercase;
+margin-top:22px;
+}
+
+.big{
+font-size:82px;
+font-weight:950;
+letter-spacing:-5px;
+text-align:center;
+margin:8px 0 3px;
+}
+
+.timer{
+text-align:center;
+color:#a7a8b6;
+font-size:17px;
+margin-bottom:20px;
+}
+
+.bar{
+height:8px;
+background:#292a35;
+border-radius:99px;
+overflow:hidden;
+margin:13px 0 20px;
+}
+
+.bar i{
+display:block;
+height:100%;
+width:48%;
+background:linear-gradient(90deg,var(--accent),#b18cff);
+border-radius:99px;
+transition:width .1s linear;
+}
+
+.grid{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:10px;
+margin-top:14px;
+}
+
+.btn{
+width:100%;
+padding:16px;
+border-radius:17px;
+font-weight:850;
+}
+
+.primary{
+background:#fff;
+color:#09090f;
+}
+
+.secondary{
+background:#292a35;
+color:#fff;
+}
+
+.accent{
+background:linear-gradient(135deg,#7c5cff,#a978ff);
+color:white;
+}
+
+.stats{
+display:grid;
+grid-template-columns:repeat(3,1fr);
+gap:9px;
+margin-top:13px;
+}
+
+.stat{
+background:#191a24;
+border:1px solid #292a36;
+border-radius:18px;
+padding:13px 8px;
+text-align:center;
+}
+
+.stat b{
+display:block;
+font-size:20px;
+}
+
+.stat small{
+color:var(--muted);
+font-size:10px;
+}
+
+.section{
+margin-top:18px;
+}
+
+.streak{
+display:flex;
+align-items:center;
+justify-content:space-between;
+background:#171821;
+border:1px solid #292a36;
+border-radius:20px;
+padding:14px;
+}
+
+.streak strong{
+font-size:18px;
+}
+
+.streak span{
+color:#ffb84d;
+}
+
+.result{
+display:none;
+text-align:center;
+}
+
+.result.show{
+display:block;
+}
+
+.game.hide{
+display:none;
+}
+
+.pulse{
+animation:pulse .45s ease;
+}
+
+@keyframes pulse{
+50%{transform:scale(1.025)}
+}
+
+.footer{
+text-align:center;
+color:#656775;
+font-size:11px;
+margin-top:24px;
+}
 </style>
 </head>
+
 <body>
-<main class="app">
-  <div class="top">
-    <div class="logo">1%</div>
-    <div class="day">DAILY CHALLENGE<br><span id="challengeNo">#001</span></div>
-  </div>
 
-  <section id="home" class="card">
-    <span class="pill">OGGI</span>
-    <h1>Fermati a 5,00 secondi</h1>
-    <p>Parti quando vuoi. Ferma il timer il più vicino possibile a <b>5,00</b>.</p>
-    <button class="primary" onclick="startGame()">GIOCA</button>
-  </section>
+<div class="app">
 
-  <section id="game" class="card hidden">
-    <div class="target">Obiettivo</div>
-    <div class="big" id="timer">0,00</div>
-    <p>Non guardare troppo il tempo. Fermati quando pensi di essere a 5,00.</p>
-    <button class="primary" onclick="stopGame()">STOP</button>
-  </section>
+<div class="top">
+<div class="logo">1<span>%</span></div>
 
-  <section id="result" class="card hidden">
-    <span class="pill" id="badge">RISULTATO</span>
-    <div class="score" id="score">0%</div>
-    <div class="seconds" id="seconds">0,00 secondi</div>
-    <div class="record" id="record"></div>
-    <button class="primary" onclick="shareResult()">SFIDA UN AMICO</button>
-    <button class="secondary" onclick="startGame()">RIPROVA</button>
-    <div class="sharemsg" id="sharemsg"></div>
-  </section>
+<div class="day">
+DAILY CHALLENGE<br>
+<b>#001</b>
+</div>
+</div>
 
-  <div class="footer">Una sfida. Pochi secondi. Un record da battere.</div>
-</main>
+
+<div class="card">
+
+<div class="game" id="game">
+
+<div class="badge">
+⚡ SFIDA DI OGGI
+</div>
+
+<h1>
+Ferma il tempo.<br>
+Il più vicino vince.
+</h1>
+
+<p class="sub">
+Tocca START e prova a fermare il timer
+il più vicino possibile a <b>1,00 secondo</b>.
+</p>
+
+<div class="target">
+OBIETTIVO
+</div>
+
+<div class="big" id="time">
+1.00
+</div>
+
+<div class="timer">
+secondi
+</div>
+
+<button class="btn primary" id="start">
+START
+</button>
+
+<div class="bar">
+<i id="bar"></i>
+</div>
+
+<div class="grid">
+
+<button class="btn secondary" id="practice">
+ALLENATI
+</button>
+
+<button class="btn accent" id="friend">
+👥 SFIDA UN AMICO
+</button>
+
+</div>
+
+</div>
+
+
+<div class="result" id="result">
+
+<div class="badge">
+🏆 RISULTATO
+</div>
+
+<div class="big" id="score">
+0.00%
+</div>
+
+<div class="timer" id="detail">
+0 ms dal target
+</div>
+
+<p class="sub" id="message">
+Hai completato la sfida.
+Riesci a fare meglio?
+</p>
+
+<br>
+
+<button class="btn primary" id="again">
+RIPROVA
+</button>
+
+<br><br>
+
+<button class="btn secondary" id="share">
+📤 CONDIVIDI IL RISULTATO
+</button>
+
+</div>
+
+</div>
+
+
+<div class="stats">
+
+<div class="stat">
+<b id="best">
+0.00
+</b>
+<small>
+RECORD
+</small>
+</div>
+
+<div class="stat">
+<b>
+🔥 1
+</b>
+<small>
+STREAK
+</small>
+</div>
+
+<div class="stat">
+<b>
+100
+</b>
+<small>
+MONETE
+</small>
+</div>
+
+</div>
+
+
+<div class="section">
+
+<div class="streak">
+
+<strong>
+🔥 Torna domani
+</strong>
+
+<span>
++25 🪙
+</span>
+
+</div>
+
+</div>
+
+
+<div class="footer">
+Nuova sfida ogni giorno · 1% Challenge
+</div>
+
+</div>
+
+
 <script>
-let started=0, interval=0, best=Number(localStorage.getItem("onePctBest")||0);
-const $=id=>document.getElementById(id);
-function show(id){["home","game","result"].forEach(x=>$(x).classList.toggle("hidden",x!==id))}
-function startGame(){
-  clearInterval(interval);
-  $("sharemsg").textContent="";
-  $("timer").textContent="0,00";
-  show("game");
-  started=performance.now();
-  interval=setInterval(()=>{
-    $("timer").textContent=((performance.now()-started)/1000).toFixed(2).replace(".",",");
-  },20);
+
+const target = 1;
+
+let startTime = 0;
+let running = false;
+
+let best =
+parseFloat(
+localStorage.getItem("best1p") || "0"
+);
+
+const $ = id =>
+document.getElementById(id);
+
+
+if(best){
+$("best").textContent =
+best.toFixed(2);
 }
-function stopGame(){
-  clearInterval(interval);
-  const sec=(performance.now()-started)/1000;
-  const error=Math.abs(sec-5);
-  const score=Math.max(0,100-(error*20));
-  const s=score.toFixed(2);
-  const record=score>best;
-  if(record){best=score;localStorage.setItem("onePctBest",String(best))}
-  $("score").textContent=s+"%";
-  $("seconds").textContent=sec.toFixed(2).replace(".",",")+" secondi";
-  $("badge").textContent=record?"🏆 NUOVO RECORD":"RISULTATO";
-  $("record").textContent=record?"Hai battuto il tuo record.":"Il tuo record: "+best.toFixed(2)+"%";
-  show("result");
+
+
+function start(){
+
+if(running) return;
+
+running = true;
+
+startTime =
+performance.now();
+
+$("start").textContent =
+"FERMA!";
+
+$("start").className =
+"btn accent pulse";
+
+$("practice").disabled =
+true;
+
+$("friend").disabled =
+true;
+
+$("bar").style.width =
+"100%";
+
+
+function tick(){
+
+if(!running) return;
+
+const t =
+(performance.now()-startTime)/1000;
+
+$("time").textContent =
+t.toFixed(2);
+
+requestAnimationFrame(tick);
+
 }
-async function shareResult(){
-  const text="Ho fatto "+$("score").textContent+" su 1% Challenge. Riesci a battermi?";
-  if(navigator.share){
-    try{await navigator.share({title:"1% Challenge",text});return}catch(e){}
-  }
-  try{
-    await navigator.clipboard.writeText(text);
-    $("sharemsg").textContent="Copiato! Incollalo su WhatsApp, Instagram o dove vuoi.";
-  }catch(e){$("sharemsg").textContent=text}
+
+requestAnimationFrame(tick);
+
 }
+
+
+function stop(){
+
+if(!running) return;
+
+running = false;
+
+const t =
+(performance.now()-startTime)/1000;
+
+const diff =
+Math.abs(t-target);
+
+const score =
+Math.max(
+0,
+100-(diff*100)
+);
+
+
+if(
+!best ||
+Math.abs(t-target)
+<
+Math.abs(best-target)
+){
+
+best=t;
+
+localStorage.setItem(
+"best1p",
+best
+);
+
+$("best").textContent =
+best.toFixed(2);
+
+}
+
+
+$("score").textContent =
+score.toFixed(2)+"%";
+
+
+$("detail").textContent =
+Math.round(diff*1000)+
+" ms dal target";
+
+
+if(score>=99){
+
+$("message").textContent =
+"🎯 INCREDIBILE! Sei praticamente perfetto!";
+
+}
+else if(score>=95){
+
+$("message").textContent =
+"🔥 Fortissimo! Puoi arrivare al 99%.";
+
+}
+else if(score>=80){
+
+$("message").textContent =
+"⚡ Quasi! Un altro tentativo può cambiare tutto.";
+
+}
+else{
+
+$("message").textContent =
+"😈 Non mollare. Il tuo 1% migliore è ancora da conquistare.";
+
+}
+
+
+$("game").classList.add("hide");
+
+$("result").classList.add("show");
+
+}
+
+
+$("start").onclick =
+() => {
+
+if(running){
+
+stop();
+
+}
+else{
+
+start();
+
+}
+
+};
+
+
+$("again").onclick =
+() => {
+
+running=false;
+
+$("result")
+.classList
+.remove("show");
+
+$("game")
+.classList
+.remove("hide");
+
+$("start").textContent =
+"START";
+
+$("start").className =
+"btn primary";
+
+$("practice").disabled =
+false;
+
+$("friend").disabled =
+false;
+
+$("time").textContent =
+"1.00";
+
+$("bar").style.width =
+"48%";
+
+};
+
+
+$("practice").onclick =
+() => {
+
+alert(
+"Modalità allenamento 🚀\n\nPresto potremo aggiungere tentativi extra, statistiche e ricompense."
+);
+
+};
+
+
+async function share(){
+
+const text =
+"🔥 Ho fatto "+
+$("score").textContent+
+" nella 1% Challenge! Riesci a battermi?";
+
+if(navigator.share){
+
+try{
+
+await navigator.share({
+
+title:"1% Challenge",
+
+text:text,
+
+url:location.href
+
+});
+
+}
+catch(e){}
+
+}
+
+else{
+
+try{
+
+await navigator.clipboard.writeText(
+text+" "+location.href
+);
+
+alert(
+"Risultato copiato! Incollalo su WhatsApp, Instagram o TikTok."
+);
+
+}
+catch(e){
+
+alert(text);
+
+}
+
+}
+
+}
+
+
+$("friend").onclick =
+share;
+
+$("share").onclick =
+share;
+
 </script>
+
 </body>
 </html>
